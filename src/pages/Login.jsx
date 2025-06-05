@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import * as L from "../style/styledLogin";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -9,29 +10,25 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
 
-  const handleLogin = async () => {
-    try {
-      const response = await fetch("http://localhost:8080/api/user/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          userId,
-          password,
-        }),
+  const handleLogin = () => {
+    axios
+      .post("http://localhost:8080/api/user/login", {
+        userId: userId,
+        password: password,
+      })
+      .then((res) => {
+        console.log("로그인 성공:", res.data);
+
+        localStorage.setItem("token", res.data.token);
+        // 로그인 성공 시 메인으로 이동
+        // navigate("/");
+
+        window.location.href = "/";
+      })
+      .catch((err) => {
+        console.error("로그인 실패:", err);
+        alert("아이디 또는 비밀번호가 잘못됐습니다.");
       });
-
-      if (!response.ok) {
-        throw new Error("로그인 실패");
-      }
-
-      const data = await response.json();
-      localStorage.setItem("token", data.token); // 또는 accessToken
-      navigate("/main");
-    } catch (err) {
-      setError("아이디 또는 비밀번호가 올바르지 않습니다.");
-    }
   };
 
   const gotoJoin = () => {

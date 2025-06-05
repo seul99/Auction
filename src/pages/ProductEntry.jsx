@@ -43,7 +43,7 @@ const ProductEntry = () => {
     formData.append("productCategory", productCategory);
     formData.append("productStatus", productStatus);
     formData.append("createAt", today);
-    formData.append("productIImage", productImage);
+    formData.append("productImage", productImage);
 
     try {
       const res = await fetch(

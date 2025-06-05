@@ -1,3 +1,4 @@
+//App.js 파일
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Main from "./pages/Main";
 import Login from "./pages/Login";
@@ -10,6 +11,7 @@ import ProductEntry from "./pages/ProductEntry";
 import ProductManagement from "./pages/ProductManagement";
 import ProfileEdit from "./pages/ProfileEdit";
 import UserInfoEdit from "./pages/userInformation";
+import Detail from "./pages/Detail";
 function App() {
   return (
     <BrowserRouter>
@@ -26,6 +28,7 @@ function App() {
         <Route path="/productmanagement" element={<ProductManagement />} />
         <Route path="/profileedit" element={<ProfileEdit />} />
         <Route path="/userinfo" element={<UserInfoEdit />} />
+        <Route path="/productdetail" element={<Detail />} />
       </Routes>
     </BrowserRouter>
   );

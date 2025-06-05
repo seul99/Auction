@@ -3,6 +3,7 @@ import * as M from "../style/styledMain";
 import HotItemSection from "../components/HotItemSection";
 import FooterSection from "../components/FooterSection";
 import HeaderSection from "../components/HeaderSection";
+import axios from "axios";
 
 const Main = () => {
   const [current, setCurrent] = useState(0);
@@ -18,22 +19,18 @@ const Main = () => {
   useEffect(() => {
     const token = localStorage.getItem("token");
 
-    fetch("http://localhost:8080/home", {
-      method: "GET",
-      headers: {
-        Authorization: token,
-      },
-    })
-      .then((res) => {
-        if (!res.ok) throw new Error("홈 데이터 로딩 실패");
-        return res.json();
+    axios
+      .get("http://localhost:8080 /home", {
+        headers: {
+          Authorization: token,
+        },
       })
-      .then((data) => {
-        setCategoryList(data.categoryList); // 백엔드 응답 기준
-        setHotItemList(data.hotItemList); // 백엔드 응답 기준
+      .then((res) => {
+        setCategoryList(res.data.categoryList); // 백엔드 응답 기준
+        setHotItemList(res.data.hotItemList); // 백엔드 응답 기준
       })
       .catch((err) => {
-        console.error(err);
+        console.error("홈 데이터 로딩 실패:", err);
       });
   }, []);
 
